@@ -3,12 +3,25 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 import classes from './Burger.module.css';
 
-const Burger = () => {
+const Burger = ({ ingredients }) => {
+	let allIngredients = Object.keys(ingredients)
+		.map( key => {
+			return [...Array(ingredients[key])].map((_, idx) => {
+				return <BurgerIngredient key={key + idx} type={key} />
+			})
+		})
+		.reduce((prevVal, curVal) => {
+			return prevVal.concat(curVal)
+		}, [])
+
+	if(allIngredients.length === 0) {
+		allIngredients = <p>Please add some ingredients!</p>
+	}
+
 	return (
 		<div className={classes.Burger}>
 			<BurgerIngredient type="bread-top" />
-			<BurgerIngredient type="cheese" />
-			<BurgerIngredient type="meat" />
+				{allIngredients}
 			<BurgerIngredient type="bread-bottom" />
 		</div>
 	);
