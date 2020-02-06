@@ -10,7 +10,7 @@ const controls = [
 	{ label: 'Meat', type: 'meat' }
 ]
 
-const BuildControls = ({addHandler, removeHandler, disabled, currentPrice}) => {
+const BuildControls = ({addHandler, removeHandler, disabled, currentPrice, purchasable}) => {
 	return (
 		<div className={classes.BuildControls}>
 			<p>Current price: <strong>&pound;{currentPrice.toFixed(2)}</strong></p>
@@ -24,6 +24,11 @@ const BuildControls = ({addHandler, removeHandler, disabled, currentPrice}) => {
 				/>
 			)
 			)}
+			<button 
+				className={classes.OrderButton}
+				disabled={!purchasable}>
+				ORDER NOW!
+			</button>
 		</div>
 	);
 };
