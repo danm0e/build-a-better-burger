@@ -11,9 +11,9 @@ const Toolbar = ({onToggle}) => (
 		<div className={classes.Logo}>
 			<Logo />
 		</div>
-		<div className={classes.DeskTopOnly}>
+        <nav className={classes.DeskTopOnly}>
 			<NavItems />
-		</div>
+		</nav>
 	</header>
 );
 
