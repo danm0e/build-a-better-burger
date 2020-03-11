@@ -33,6 +33,14 @@ class ContactData extends Component {
 
 	}
 
+	onChangeHandler = (ev, el) => {
+		const newOrderForm = {...this.state.orderForm}
+		const newElement = {...newOrderForm[el]}
+		newElement.value = ev.target.value
+		newOrderForm[el] = newElement
+		this.setState({ orderForm: newOrderForm })
+	}
+
 	render() {
 		const formElements = [];
 		for( let key in this.state.orderForm ) {
@@ -50,12 +58,9 @@ class ContactData extends Component {
 						elementType={element.config.elementType} 
 						elementConfig={element.config.elementConfig} 
 						value={element.config.value} 
+						onChange={(e) => this.onChangeHandler(e, element.id)}
 					/>
 				))}
-				{/* <Input inputtype='input' type='text' name='name' placeholder='Your name'/>
-				<Input inputtype='input' type='email' name='email' placeholder='Your email'/>
-				<Input inputtype='input' type='text' name='street' placeholder='Street'/>
-				<Input inputtype='input' type='text' name='postcode' placeholder='Postcode'/> */}
 				<Button type='Success' onClick={this.orderHandler}>ORDER</Button>
 			</form>
 		);
