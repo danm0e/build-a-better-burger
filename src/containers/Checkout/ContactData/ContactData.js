@@ -3,17 +3,14 @@ import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import axios from '../../../axios-orders'
 import Input from '../../../components/UI/Input/Input';
+import ContactDataConfig from './ContactData.config';
 
 import classes from './ContactData.module.css';
 
 class ContactData extends Component {
 	state = {
-		name: '',
-		email: '',
-		address: {
-			street: '',
-			postcode: ''
-		}
+		orderForm: ContactDataConfig,
+		loading: false
 	}
 
 	orderHandler = (e) => {
@@ -22,15 +19,6 @@ class ContactData extends Component {
 		const order = {
 			ingredients: this.props.ingredients,
 			price: this.props.price,
-			customer: {
-				name: 'Dan Moe',
-				address: {
-					street: 'My Street',
-					postcode: 'W1',
-					country: 'England'
-				},
-				email: 'test@test.com'
-			},
 			deliveryMethod: 'fastest'
 		}
 
@@ -46,12 +34,28 @@ class ContactData extends Component {
 	}
 
 	render() {
+		const formElements = [];
+		for( let key in this.state.orderForm ) {
+			formElements.push({
+				id: key,
+				config: this.state.orderForm[key]
+			})
+		}
+
 		let form = (
 			<form>
-				<Input inputtype='input' type='text' name='name' placeholder='Your name'/>
+				{formElements.map(element => (
+					<Input 
+						key={element.id}
+						elementType={element.config.elementType} 
+						elementConfig={element.config.elementConfig} 
+						value={element.config.value} 
+					/>
+				))}
+				{/* <Input inputtype='input' type='text' name='name' placeholder='Your name'/>
 				<Input inputtype='input' type='email' name='email' placeholder='Your email'/>
 				<Input inputtype='input' type='text' name='street' placeholder='Street'/>
-				<Input inputtype='input' type='text' name='postcode' placeholder='Postcode'/>
+				<Input inputtype='input' type='text' name='postcode' placeholder='Postcode'/> */}
 				<Button type='Success' onClick={this.orderHandler}>ORDER</Button>
 			</form>
 		);
