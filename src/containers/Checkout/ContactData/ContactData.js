@@ -10,7 +10,8 @@ import classes from './ContactData.module.css';
 class ContactData extends Component {
 	state = {
 		orderForm: ContactDataConfig,
-		loading: false
+		loading: false,
+		isPristine: false
 	}
 
 	orderHandler = (e) => {
@@ -40,11 +41,39 @@ class ContactData extends Component {
 	}
 
 	onChangeHandler = (ev, el) => {
-		const newOrderForm = {...this.state.orderForm}
-		const newElement = {...newOrderForm[el]}
-		newElement.value = ev.target.value
-		newOrderForm[el] = newElement
-		this.setState({ orderForm: newOrderForm })
+		const newOrderForm = {...this.state.orderForm};
+		const newElement = {...newOrderForm[el]};
+		newElement.value = ev.target.value;
+		newElement.valid = this.checkFormValidity(newElement.value, newElement.validation);
+		newOrderForm[el] = newElement;
+		newElement.touched = true;
+
+		let isPristine = true;
+		for( let newElement in newOrderForm ) {
+			isPristine = newOrderForm[newElement].valid && isPristine
+		}
+
+		this.setState({ orderForm: newOrderForm, isPristine: isPristine });
+	}
+
+	checkFormValidity = (value, rules) => {
+		const { length } = value;
+		const { required, minLength, maxLength } = rules;
+		let isValid = true;
+		
+		if(required) {
+			isValid = value.trim() !== '' && isValid;
+		}
+
+		if(minLength) {
+			isValid = length >= minLength && isValid;
+		}
+
+		if(maxLength) {
+			isValid = length <= maxLength && isValid;
+		}
+
+		return isValid;
 	}
 
 	render() {
@@ -64,10 +93,13 @@ class ContactData extends Component {
 						elementType={element.config.elementType} 
 						elementConfig={element.config.elementConfig} 
 						value={element.config.value} 
+						inValid={!element.config.valid}
+						shouldValidate={!element.config.validation}
+						touched={element.config.touched}
 						onChange={(e) => this.onChangeHandler(e, element.id)}
 					/>
 				))}
-				<Button type='Success'>ORDER</Button>
+				<Button type='Success' disabled={!this.state.isPristine}>ORDER</Button>
 			</form>
 		);
 

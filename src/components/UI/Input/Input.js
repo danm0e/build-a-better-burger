@@ -7,16 +7,24 @@ const getElement = props => {
 		elementType, 
 		elementConfig, 
 		value, 
-		onChange
+		onChange,
+		inValid,
+		shouldValidate,
+		touched
 	} = props;
 
 	let inputElement = null;
+	const inputClasses = [classes.InputElement];
+
+	if(inValid && shouldValidate && touched) {
+		inputClasses.push(classes.Invalid)
+	}
 
 	switch( elementType ) {
 		case( 'textarea' ):
 			inputElement = (
 				<textarea 
-					className={classes.InputElement} 
+					className={inputClasses.join(' ')} 
 					{...elementConfig} 
 					value={value}
 					onChange={onChange}
@@ -26,7 +34,7 @@ const getElement = props => {
 		case( 'select' ):
 			inputElement = (
 				<select 
-					className={classes.InputElement} 
+					className={inputClasses.join(' ')} 
 					{...elementConfig} 
 					value={value}
 					onChange={onChange}
@@ -42,7 +50,7 @@ const getElement = props => {
 		default:
 			inputElement = (
 				<input 
-					className={classes.InputElement} 
+					className={inputClasses.join(' ')} 
 					{...elementConfig} 
 					value={value}
 					onChange={onChange}

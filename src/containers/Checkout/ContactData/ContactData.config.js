@@ -5,7 +5,12 @@ const ContactDataConfig = {
 			type: 'text',
 			placeholder: 'Your Name'
 		},
-		value: ''
+		value: '',
+		validation: {
+			required: true
+		},
+		valid: false,
+		touched: false
 	},
 	street: {
 		elementType: 'input',
@@ -13,7 +18,12 @@ const ContactDataConfig = {
 			type: 'text',
 			placeholder: 'Street'
 		},
-		value: ''
+		value: '',
+		validation: {
+			required: true
+		},
+		valid: false,
+		touched: false
 	},
 	postcode: {
 		elementType: 'input',
@@ -21,7 +31,14 @@ const ContactDataConfig = {
 			type: 'text',
 			placeholder: 'Postcode'
 		},
-		value: ''
+		value: '',
+		validation: {
+			required: true,
+			minLength: 5,
+			maxLength: 5
+		},
+		valid: false,
+		touched: false
 	},
 	country: {
 		elementType: 'input',
@@ -29,7 +46,12 @@ const ContactDataConfig = {
 			type: 'text',
 			placeholder: 'Country'
 		},
-		value: ''
+		value: '',
+		validation: {
+			required: true
+		},
+		valid: false,
+		touched: false
 	},
 	email: {
 		elementType: 'input',
@@ -37,7 +59,12 @@ const ContactDataConfig = {
 			type: 'email',
 			placeholder: 'Your Email'
 		},
-		value: ''
+		value: '',
+		validation: {
+			required: true
+		},
+		valid: false,
+		touched: false
 	},
 	deliveryMethod: {
 		elementType: 'select',
@@ -47,7 +74,9 @@ const ContactDataConfig = {
 				{ value: 'cheapest', label: 'Cheapest' }
 			]
 		},
-		value: ''
+		value: 'fastest',
+		validation: {},
+		valid: true,
 	}
 }
 
